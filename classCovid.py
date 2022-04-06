@@ -43,7 +43,7 @@ class CovidData:
         return countries
 
     def update_data(self):
-        response = requests.post(f'https://www.parsehub.com/api/v2/projects/{self.project_token}/run', params=self.params)
+        response  = requests.post(f'https://www.parsehub.com/api/v2/projects/{self.project_token}/run', params=self.params)
         def poll():
             time.sleep(0.1)
             old_data = self.data

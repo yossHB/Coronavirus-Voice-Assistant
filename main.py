@@ -13,7 +13,7 @@ def speak(text):
     engine.say(text)
     engine.runAndWait()
 
-# write what u listen
+# write what u said
 def get_audio():
     # setup recogrizer
     talk = sr.Recognizer()
