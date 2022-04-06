@@ -1,6 +1,7 @@
 import requests
 import json
-
+import threading
+import time
 class CovidData:
     def __init__(self, api_key,project_token):
         self.api_key = api_key
@@ -40,3 +41,18 @@ class CovidData:
         for country in self.data["country"]:
             countries.append(country["name"])
         return countries
+
+    def update_data(self):
+        response = requests.post(f'https://www.parsehub.com/api/v2/projects/{self.project_token}/run', params=self.params)
+        def poll():
+            time.sleep(0.1)
+            old_data = self.data
+            while True:
+                new_data = self.get_data()
+                if new_data != old_data:
+                    self.data = new_data
+                    print("Data updated")
+                    break
+                time.sleep(5)
+        thread= threading.Thread(target=poll)
+        thread.start()

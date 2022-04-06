@@ -40,6 +40,7 @@ def main():
     print("Started Program")
     END_PHRASE = "stop"
     country_list = data.get_list_of_countries()
+    UPDATE_COMMAND = "update"
     TOTAL_PATTERNS = {
                         re.compile("[\w\s]+ total [\w\s]+ cases"):data.get_total_cases,
                         re.compile("[\w\s]+ total cases"): data.get_total_cases,
@@ -68,6 +69,10 @@ def main():
             if pattern.match(text):
                 result = func()
                 break
+
+        if text == UPDATE_COMMAND:
+            result = "Data is being updated. This may take a moment!"
+            data.update_data()
 
         if result:
             speak(result)
